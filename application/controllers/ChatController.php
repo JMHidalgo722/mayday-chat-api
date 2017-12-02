@@ -15,7 +15,8 @@ class ChatController extends CI_Controller {
                 ->join('messages m', 'm.senderId = u.id')
                 ->join('channel c', 'c.id = m.channelId')
                 ->get()->result();
-    return $messages;
+    
+    echo json_encode($messages);
   }
 
   public function checkChannel($channelName) {
@@ -60,14 +61,29 @@ class ChatController extends CI_Controller {
 
   public function send() {
     $data = json_decode($this->input->post('data'));
-    $this->db->insert('messages', array(
-      'id'         => $data->id,
-      'nodeId'     => $data->nodeId,
-      'timestamp'  => $data->timestamp,
-      'channelId'  => $this->checkChannel($data->channelName),
-      'senderId'   => $this->checkSender($data->senderName),
-      'content'    => $data->content
-    ));
+
+    $values = array();
+
+    foreach ($data as $message) {
+      $values[] = array(
+        'id'          => $message->id,
+        'nodeId'      => $message->nodeId,
+        'timestamp'   => $message->timestamp,
+        'channelId' => $this->checkChannel($message->channelName),
+        'senderId'  => $this->checkSender($message->senderName),
+        'content'     => $message->content
+      );
+    }
+
+    foreach ($values as $value) {
+      $check = $this->db->where('id', $value['id'])
+        ->get('messages')
+        ->result();
+
+      if (count($check) == 0) {
+        $this->db->insert('messages', $value);
+      }
+    }
 
     $res['status'] = 1;
 
