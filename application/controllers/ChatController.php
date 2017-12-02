@@ -12,49 +12,56 @@ class ChatController extends CI_Controller {
 
   public function get($id) {
     $messages = $this->db
-                ->select('u.username as username, c.name as channel, m.channel_id as channel_id, m.user_id as user_id, m.message as message')
+                ->select('m.id, m.nodeId, m.timestamp, m.content, u.senderName, c.channelName')
                 ->from('users u')
-                ->join('messages m', 'user_id = u.id')
-                ->join('channel c', 'c.id = channel_id')
-                ->where('channel_id', $id)
+                ->order_by('timestamp', 'desc')
+                ->limit(20)
+                ->join('messages m', 'm.senderId = u.id')
+                ->join('channel c', 'c.id = m.channelId')
+                ->where('m.channelId', $id)
                 ->get()->result();
     return $messages;
+  }
+
+  public function checkChannel($channelName) {
+    $channel = $this->db
+                ->where('channelName', $channelName)
+                ->get('channel')
+                ->row();
+
+    if($channel) {
+      $channelId = $channel->id;
+    } else {
+      $this->db->insert('channel', array('channelName' => $channelName));
+      $channelId = $this->db->insert_id();
+    }
+
+    return $channelId;
+  }
+
+  public function checkSender($senderName) {
+    $sender = $this->db
+                 ->where('senderName', $senderName)
+                 ->get('users')
+                 ->row();
+    
+    if($sender) {
+      $senderId = $sender->id;
+    } else {
+      $this->db->insert('users', array('senderName' => $senderName));
+      $senderId = $this->db->insert_id();
+    }
+
+    return $senderId;
   }
 
   public function login() {
     $data = json_decode($this->input->post('data'));
 
-    $channelName = $data->channel;
-    $channel = $this->db
-                ->where('name', $channelName)
-                ->get('channel')
-                ->row();
+    $channelId = $this->checkChannel($data->channelName);
+    $senderId = $this->checkSender($data->senderName);
 
-    if($channel) {
-      $channel_id = $channel->id;
-    } else {
-      $this->db->insert('channel', array('name' => $channelName));
-      $channel_id = $this->db->insert_id();
-    }
-
-    $username = $data->username;
-    $user = $this->db
-                 ->where('username', $username)
-                 ->get('users')
-                 ->row();
-    
-    if($user) {
-      $user_id = $user->id;
-    } else {
-      $this->db->insert('users', array('username' => $username));
-      $user_id = $this->db->insert_id();
-    }
-
-    $res = array(
-      'channel_id'  => $channel_id,
-      'user_id'     => $user_id,
-      'messages'    => $this->get($channel_id)
-    );
+    $res = $this->get($channelId);
 
     echo json_encode($res);
   }
@@ -62,9 +69,12 @@ class ChatController extends CI_Controller {
   public function send() {
     $data = json_decode($this->input->post('data'));
     $this->db->insert('messages', array(
-      'channel_id'  => $data->channel_id,
-      'user_id'     => $data->user_id,
-      'message'     => $data->message
+      'id'         => $data->id,
+      'nodeId'     => $data->nodeId,
+      'timestamp'  => $data->timestamp,
+      'channelId'  => $this->checkChannel($data->channelName),
+      'senderId'   => $this->checkSender($data->senderName),
+      'content'    => $data->content
     ));
 
     $res['status'] = 1;

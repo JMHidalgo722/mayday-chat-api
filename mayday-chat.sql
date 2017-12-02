@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2017 at 03:13 PM
+-- Generation Time: Dec 02, 2017 at 09:08 PM
 -- Server version: 10.1.24-MariaDB
 -- PHP Version: 7.1.6
 
@@ -30,16 +30,17 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `channel` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL
+  `channelName` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `channel`
 --
 
-INSERT INTO `channel` (`id`, `name`) VALUES
+INSERT INTO `channel` (`id`, `channelName`) VALUES
 (1, 'public'),
-(2, 'uhack');
+(2, 'uhack'),
+(3, 'test');
 
 -- --------------------------------------------------------
 
@@ -48,21 +49,60 @@ INSERT INTO `channel` (`id`, `name`) VALUES
 --
 
 CREATE TABLE `messages` (
-  `id` bigint(20) NOT NULL,
-  `channel_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `message` text NOT NULL
+  `id` char(36) NOT NULL,
+  `nodeId` varchar(255) NOT NULL,
+  `senderId` int(11) NOT NULL,
+  `channelId` int(11) NOT NULL,
+  `timestamp` int(11) NOT NULL,
+  `content` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `messages`
 --
 
-INSERT INTO `messages` (`id`, `channel_id`, `user_id`, `message`) VALUES
-(25, 2, 14, 'hahahah'),
-(26, 2, 15, 'kajfbkqjbefk'),
-(27, 2, 14, 'qefqef'),
-(28, 2, 14, 'svfad');
+INSERT INTO `messages` (`id`, `nodeId`, `senderId`, `channelId`, `timestamp`, `content`) VALUES
+('aqec-qdec-qdchjq', 'qec', 14, 2, 31441, 'wrv2r2r'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, 'qef1qef'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, 'qaevqwrvwrv'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, 'wrvq2r'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '4thu5j6u'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, 'wrget'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '4tbh4ynh'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '5yn5yn'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '5yjuj7ik'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, 't4h5uj'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '7il8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol8o,l8o,'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol8o,l8o,'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol8o,l8o,'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol8o,l8o,'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol8o,l8o,'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol8o,l8o,'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol8o,l8o,'),
+('fhqir-wfkjvbvrf-wrv', 'wkdubcv', 14, 2, 123456, '89l8ol8o,l8o,');
 
 -- --------------------------------------------------------
 
@@ -72,16 +112,18 @@ INSERT INTO `messages` (`id`, `channel_id`, `user_id`, `message`) VALUES
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `username` varchar(100) NOT NULL
+  `senderName` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`) VALUES
+INSERT INTO `users` (`id`, `senderName`) VALUES
 (14, 'jmhidalgo'),
-(15, 'lawrenze');
+(15, 'lawrenze'),
+(16, 'raph'),
+(17, 'claire');
 
 --
 -- Indexes for dumped tables
@@ -91,12 +133,6 @@ INSERT INTO `users` (`id`, `username`) VALUES
 -- Indexes for table `channel`
 --
 ALTER TABLE `channel`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `messages`
---
-ALTER TABLE `messages`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -113,17 +149,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `channel`
 --
 ALTER TABLE `channel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `messages`
---
-ALTER TABLE `messages`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
