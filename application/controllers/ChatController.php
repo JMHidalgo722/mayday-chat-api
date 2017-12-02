@@ -7,18 +7,13 @@ class ChatController extends CI_Controller {
   }
 
   public function get_all() {
-    
-  }
-
-  public function get($id) {
     $messages = $this->db
                 ->select('m.id, m.nodeId, m.timestamp, m.content, u.senderName, c.channelName')
                 ->from('users u')
                 ->order_by('timestamp', 'desc')
-                ->limit(20)
+                ->limit(50)
                 ->join('messages m', 'm.senderId = u.id')
                 ->join('channel c', 'c.id = m.channelId')
-                ->where('m.channelId', $id)
                 ->get()->result();
     return $messages;
   }
@@ -57,11 +52,8 @@ class ChatController extends CI_Controller {
 
   public function login() {
     $data = json_decode($this->input->post('data'));
-
     $channelId = $this->checkChannel($data->channelName);
-    $senderId = $this->checkSender($data->senderName);
-
-    $res = $this->get($channelId);
+    $res = $this->get_all();
 
     echo json_encode($res);
   }
